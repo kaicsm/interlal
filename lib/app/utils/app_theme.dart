@@ -29,6 +29,28 @@ class AppTheme {
         iconTheme: IconThemeData(color: colorScheme.onSurfaceVariant),
       ),
 
+      chipTheme: ChipThemeData(
+        selectedColor: colorScheme.secondaryContainer,
+        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+        labelStyle: baseTheme.textTheme.labelLarge?.copyWith(
+          color: colorScheme.onSurfaceVariant,
+          fontWeight: FontWeight.normal,
+        ),
+        secondaryLabelStyle: baseTheme.textTheme.labelLarge?.copyWith(
+          color: colorScheme.onSecondaryContainer,
+          fontWeight: FontWeight.bold,
+        ),
+        iconTheme: IconThemeData(color: colorScheme.primary, size: 18),
+
+        showCheckmark: false,
+        shape: StadiumBorder(
+          side: BorderSide(
+            color: colorScheme.outlineVariant.withAlpha((255 * 0.5).round()),
+            width: 1.0,
+          ),
+        ),
+      ),
+
       cardTheme: CardTheme(
         elevation: brightness == Brightness.light ? 1.0 : 1.5,
         color: colorScheme.surfaceContainerLow,

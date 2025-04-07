@@ -7,7 +7,7 @@ import 'package:interlal/app/utils/app_theme.dart';
 class App extends StatelessWidget {
   App({super.key});
 
-  final ThemeController themeController = Get.find<ThemeController>();
+  final ThemeController _themeController = Get.find<ThemeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class App extends StatelessWidget {
         title: "Interlal",
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
-        themeMode: themeController.themeMode,
+        themeMode: _themeController.themeMode,
         initialRoute: AppPages.initial,
         getPages: AppPages.routes,
         debugShowCheckedModeBanner: false,

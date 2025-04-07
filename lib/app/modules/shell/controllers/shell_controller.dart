@@ -10,19 +10,19 @@ class ShellController extends GetxController {
       name: 'Inicio',
       icon: Icons.home_outlined,
       selectedIcon: Icons.home,
-      pageBuilder: () => HomeView(),
+      page: HomeView(),
     ),
     PageInfo(
       name: 'Ranking',
       icon: Icons.leaderboard_outlined,
       selectedIcon: Icons.leaderboard,
-      pageBuilder: () => RankingView(),
+      page: RankingView(),
     ),
     PageInfo(
       name: 'Perfil',
       icon: Icons.person_outline,
       selectedIcon: Icons.person,
-      pageBuilder: () => ProfileView(),
+      page:ProfileView(),
     ),
   ];
   List<PageInfo> get pages => _pages;
@@ -39,12 +39,12 @@ class PageInfo {
   final String name;
   final IconData icon;
   final IconData selectedIcon;
-  final Widget Function() pageBuilder;
+  final Widget  page;
 
   PageInfo({
     required this.name,
     required this.icon,
     required this.selectedIcon,
-    required this.pageBuilder,
+    required this.page,
   });
 }

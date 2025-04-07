@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:interlal/app/modules/home/controllers/home_controller.dart';
+import 'package:interlal/app/utils/icon_helper.dart';
+import 'package:interlal/app/widgets/section_title.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -23,35 +25,17 @@ class HomeView extends GetView<HomeController> {
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          _buildHighlightCard(context),
+          _buildHighlightCard(),
 
-          const SizedBox(height: 24.0),
-          _buildSectionTitle(context, 'Próximos Jogos'),
-          const SizedBox(height: 12.0),
+          SectionTitle('Próximos Jogos'),
 
-          _buildHorizontalGameList(context),
+          _buildHorizontalGameList(),
 
-          const SizedBox(height: 24.0),
-          _buildSectionTitle(context, 'Resultados Recentes'),
-          const SizedBox(height: 12.0),
+          SectionTitle('Resultados Recentes'),
 
-          _buildResultItem(
-            context,
-            'Futsal M.',
-            '3º Info',
-            '2',
-            '3º Edif',
-            '1',
-          ),
-          _buildResultItem(context, 'Vôlei F.', '1º Agro', '2', '1º Info', '0'),
-          _buildResultItem(
-            context,
-            'Basquete M.',
-            '2º Info',
-            '35',
-            '2º Edif',
-            '42',
-          ),
+          _buildResultItem('Futsal M.', '3º Info', '2', '3º Edif', '1'),
+          _buildResultItem('Vôlei F.', '1º Agro', '2', '1º Info', '0'),
+          _buildResultItem('Basquete M.', '2º Info', '35', '2º Edif', '42'),
           Center(
             child: Padding(
               padding: const EdgeInsets.only(top: 8.0),
@@ -65,22 +49,16 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
 
-          const SizedBox(height: 24.0),
-          _buildSectionTitle(context, 'Avisos Importantes'),
-          const SizedBox(height: 12.0),
+          SectionTitle('Avisos Importantes'),
 
-          _buildNewsCard(context),
+          _buildNewsCard(),
           const SizedBox(height: 20.0),
         ],
       ),
     );
   }
 
-  Widget _buildSectionTitle(BuildContext context, String title) {
-    return Text(title, style: Get.textTheme.titleLarge);
-  }
-
-  Widget _buildHighlightCard(BuildContext context) {
+  Widget _buildHighlightCard() {
     final theme = Get.theme;
     final colorScheme = theme.colorScheme;
     return Card(
@@ -138,7 +116,7 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget _buildHorizontalGameList(BuildContext context) {
+  Widget _buildHorizontalGameList() {
     // TODO: Substituir por dados reais
     final games = [
       {
@@ -170,7 +148,6 @@ class HomeView extends GetView<HomeController> {
         itemBuilder: (context, index) {
           final game = games[index];
           return _buildGameCard(
-            context: context,
             sport: game['sport']!,
             teamA: game['teamA']!,
             teamB: game['teamB']!,
@@ -182,7 +159,6 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget _buildGameCard({
-    required BuildContext context,
     required String sport,
     required String teamA,
     required String teamB,
@@ -190,7 +166,7 @@ class HomeView extends GetView<HomeController> {
   }) {
     final theme = Get.theme;
     final colorScheme = theme.colorScheme;
-    IconData sportIcon = _getSportIcon(sport);
+    IconData sportIcon = IconHelper.getSportIcon(sport);
 
     return Card(
       child: InkWell(
@@ -258,7 +234,6 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget _buildResultItem(
-    BuildContext context,
     String sport,
     String teamA,
     String scoreA,
@@ -292,42 +267,50 @@ class HomeView extends GetView<HomeController> {
     );
 
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: ListTile(
+        leading: Icon(
+          IconHelper.getSportIcon(sport),
+          size: 24,
+          color: colorScheme.secondary,
+        ),
+        title: Row(
           children: [
             Expanded(
-              flex: 3,
-              child: Text(teamA, style: teamAStyle, textAlign: TextAlign.start),
-            ),
-            Expanded(
-              flex: 2,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(scoreA, style: scoreStyle),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text('-', style: theme.textTheme.bodyLarge),
-                  ),
-                  Text(scoreB, style: scoreStyle),
-                ],
+              child: Text(
+                teamA,
+                style: teamAStyle,
+                textAlign: TextAlign.start,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
-            Expanded(
-              flex: 3,
-              child: Text(teamB, style: teamBStyle, textAlign: TextAlign.end),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text('$scoreA - $scoreB', style: scoreStyle),
             ),
-            const SizedBox(width: 10),
-            Icon(_getSportIcon(sport), size: 20, color: colorScheme.secondary),
+            Expanded(
+              child: Text(
+                teamB,
+                style: teamBStyle,
+                textAlign: TextAlign.end,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ],
         ),
+        dense: true,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 8.0,
+        ),
+        onTap: () {
+          // TODO: Implementar tela de detalhes
+          Get.snackbar('Detalhes', 'Clique para ver mais detalhes');
+        },
       ),
     );
   }
 
-  Widget _buildNewsCard(BuildContext context) {
+  Widget _buildNewsCard() {
     final theme = Get.theme;
     return Card(
       child: Padding(
@@ -360,15 +343,5 @@ class HomeView extends GetView<HomeController> {
         ),
       ),
     );
-  }
-
-  IconData _getSportIcon(String sport) {
-    if (sport.toLowerCase().contains('futsal')) return Icons.sports_soccer;
-    if (sport.toLowerCase().contains('vôlei')) return Icons.sports_volleyball;
-    if (sport.toLowerCase().contains('basquete')) {
-      return Icons.sports_basketball;
-    }
-    if (sport.toLowerCase().contains('handebol')) return Icons.sports_handball;
-    return Icons.sports;
   }
 }

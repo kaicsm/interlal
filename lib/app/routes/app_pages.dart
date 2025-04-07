@@ -1,7 +1,10 @@
 import 'package:get/route_manager.dart';
 import 'package:interlal/app/modules/home/bindings/home_binding.dart';
 import 'package:interlal/app/modules/home/views/home_view.dart';
+import 'package:interlal/app/modules/profile/bindings/profile_binding.dart';
 import 'package:interlal/app/modules/profile/views/profile_view.dart';
+import 'package:interlal/app/modules/ranking/bindings/ranking_binding.dart';
+import 'package:interlal/app/modules/ranking/views/ranking_view.dart';
 import 'package:interlal/app/modules/settings/bindings/settings_binding.dart';
 import 'package:interlal/app/modules/settings/views/settings_view.dart';
 import 'package:interlal/app/modules/shell/bindings/shell_binding.dart';
@@ -21,11 +24,20 @@ class AppPages {
       page: () => HomeView(),
       binding: HomeBinding(),
     ),
-    GetPage(name: AppRoutes.profile, page: () => ProfileView()),
+    GetPage(
+      name: AppRoutes.profile,
+      page: () => ProfileView(),
+      binding: ProfileBinding(),
+    ),
     GetPage(
       name: AppRoutes.settings,
       page: () => SettingsView(),
       binding: SettingsBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.ranking,
+      page: () => RankingView(),
+      binding: RankingBinding(),
     ),
   ];
 }

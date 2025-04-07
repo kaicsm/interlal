@@ -20,7 +20,7 @@ Future<void> initializeCoreServices() async {
     return service;
   }, permanent: true);
 
-  Get.put(ThemeController(), permanent: true);
+  Get.put<ThemeController>(ThemeController(), permanent: true);
 
   Logger().i("Core services initialized successfully.");
 }

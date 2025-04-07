@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:interlal/app/core/controllers/theme_controller.dart';
+import 'package:interlal/app/modules/settings/controllers/settings_controller.dart';
+import 'package:interlal/app/widgets/action_card_tile.dart';
+import 'package:interlal/app/widgets/section_title.dart';
 
-class SettingsView extends StatelessWidget {
+class SettingsView extends GetView<SettingsController> {
   SettingsView({super.key});
 
   final ThemeController _themeController = Get.find<ThemeController>();
@@ -14,8 +17,7 @@ class SettingsView extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          _buildSectionTitle(context, 'Aparência'),
-          const SizedBox(height: 12),
+          SectionTitle('Aparência'),
           Card(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -44,9 +46,7 @@ class SettingsView extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 24),
-          _buildSectionTitle(context, 'Notificações'),
-          const SizedBox(height: 12),
+          SectionTitle('Notificações'),
 
           Card(
             child: Column(
@@ -84,54 +84,50 @@ class SettingsView extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 24),
-          _buildSectionTitle(context, 'Informações'),
-          const SizedBox(height: 12),
+          SectionTitle('Informações'),
 
-          Card(
-            child: Column(
-              children: [
-                ListTile(
-                  leading: const Icon(Icons.info_outline),
-                  title: const Text('Sobre o Interlal'),
-                  trailing: const Icon(Icons.chevron_right, size: 20),
-                  onTap: () {
-                    // TODO: Mostrar um AboutDialog ou navegar para tela de sobre
-                    Get.dialog(
-                      AlertDialog(
-                        title: const Text('Sobre o Interlal'),
-                        content: const Text(
-                          'Aplicativo para acompanhamento dos jogos interclasse.\nVersão 1.0.0',
-                        ), // Exemplo
-                        actions: [
-                          TextButton(
-                            onPressed: Get.back,
-                            child: const Text('Fechar'),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 4,
-                  ),
+          Column(
+            children: [
+              ActionCardTile(
+                icon: Icons.info_outline,
+                title: 'Sobre o Interlal',
+                trailing: const Icon(Icons.chevron_right, size: 20),
+                onTap: () {
+                  // TODO: Mostrar um AboutDialog ou navegar para tela de sobre
+                  Get.dialog(
+                    AlertDialog(
+                      title: const Text('Sobre o Interlal'),
+                      content: const Text(
+                        'Aplicativo para acompanhamento dos jogos interclasse.\nVersão 1.0.0',
+                      ), // Exemplo
+                      actions: [
+                        TextButton(
+                          onPressed: Get.back,
+                          child: const Text('Fechar'),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 4,
                 ),
-                ListTile(
-                  leading: const Icon(Icons.help_outline),
-                  title: const Text('Ajuda e Suporte'),
-                  trailing: const Icon(Icons.chevron_right, size: 20),
-                  onTap: () {
-                    // TODO: Navegar para tela de ajuda ou abrir link
-                    Get.snackbar('Ação', 'Abrir central de ajuda');
-                  },
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 4,
-                  ),
+              ),
+              ActionCardTile(
+                icon: Icons.help_outline,
+                title: 'Ajuda e Suporte',
+                trailing: const Icon(Icons.chevron_right, size: 20),
+                onTap: () {
+                  // TODO: Navegar para tela de ajuda ou abrir link
+                  Get.snackbar('Ação', 'Abrir central de ajuda');
+                },
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 4,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),
@@ -152,9 +148,5 @@ class SettingsView extends StatelessWidget {
       activeColor: Get.theme.colorScheme.primary,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
     );
-  }
-
-  Widget _buildSectionTitle(BuildContext context, String title) {
-    return Text(title, style: Get.textTheme.titleLarge);
   }
 }

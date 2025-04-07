@@ -11,5 +11,5 @@ class AppSettings {
   @enumerated
   late ThemeMode themeMode;
 
-  AppSettings();
+  AppSettings({required this.themeMode});
 }

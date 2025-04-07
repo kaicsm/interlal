@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:interlal/app/modules/profile/controllers/profile_controller.dart';
 import 'package:interlal/app/routes/app_routes.dart';
+import 'package:interlal/app/widgets/action_card_tile.dart';
+import 'package:interlal/app/widgets/section_title.dart';
 import 'package:logger/logger.dart';
 
-class ProfileView extends StatelessWidget {
+class ProfileView extends GetView<ProfileController> {
   const ProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Get.theme;
-    final ColorScheme colorScheme = theme.colorScheme;
-
     const String userName = 'Aluno Exemplo';
     const String userClass = '3º Informática';
 
@@ -34,25 +34,25 @@ class ProfileView extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 50,
-                backgroundColor: colorScheme.primaryContainer,
+                backgroundColor: Get.theme.colorScheme.primaryContainer,
                 child: Icon(
                   Icons.person,
                   size: 50,
-                  color: colorScheme.onPrimaryContainer,
+                  color: Get.theme.colorScheme.onPrimaryContainer,
                 ),
               ),
               const SizedBox(height: 16.0),
               Text(
                 userName,
-                style: theme.textTheme.headlineSmall?.copyWith(
+                style: Get.theme.textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 4.0),
               Text(
                 userClass,
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  color: theme.colorScheme.primary,
+                style: Get.theme.textTheme.bodyLarge?.copyWith(
+                  color: Get.theme.colorScheme.primary,
                 ),
               ),
               // const SizedBox(height: 4.0),
@@ -64,21 +64,19 @@ class ProfileView extends StatelessWidget {
               // ),
             ],
           ),
-          const SizedBox(height: 40),
 
-          _buildSectionTitle(context, "Informações"),
-          const SizedBox(height: 12.0),
+          const SizedBox(height: 16),
+          SectionTitle("Informações"),
 
-          _buildProfileOption(
-            context: context,
+          ActionCardTile(
             icon: Icons.edit_outlined,
             title: 'Editar Informações',
             onTap: () {
               Get.snackbar('Ação', 'Abrir edição de perfil');
             },
           ),
-          _buildProfileOption(
-            context: context,
+
+          ActionCardTile(
             icon: Icons.shield_outlined,
             title: 'Segurança',
             onTap: () {
@@ -86,53 +84,21 @@ class ProfileView extends StatelessWidget {
             },
           ),
 
-          const SizedBox(height: 24),
-          _buildSectionTitle(context, "Conta"),
-          const SizedBox(height: 12),
+          SectionTitle("Conta"),
 
-          _buildProfileOption(
-            context: context,
+          ActionCardTile(
             icon: Icons.logout,
             title: 'Sair da Conta',
-            iconColor: colorScheme.error,
-            textColor: colorScheme.error,
-            onTap: () => _showLogoutConfirmation(context, colorScheme),
+            iconColor: Get.theme.colorScheme.error,
+            textColor: Get.theme.colorScheme.error,
+            onTap: () => _showLogoutConfirmation(),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildSectionTitle(BuildContext context, String title) {
-    return Text(title, style: Get.textTheme.titleLarge);
-  }
-
-  Widget _buildProfileOption({
-    required BuildContext context,
-    required IconData icon,
-    required String title,
-    required VoidCallback onTap,
-    Color? iconColor,
-    Color? textColor,
-  }) {
-    final ThemeData theme = Get.theme;
-    final Color finalIconColor = iconColor ?? theme.colorScheme.primary;
-    final Color finalTextColor = textColor ?? theme.textTheme.bodyLarge!.color!;
-
-    return ListTile(
-      leading: Icon(icon, color: finalIconColor),
-      title: Text(
-        title,
-        style: theme.textTheme.bodyLarge?.copyWith(color: finalTextColor),
-      ),
-      trailing: Icon(Icons.chevron_right, size: 20),
-      onTap: onTap,
-      hoverColor: theme.colorScheme.primary.withValues(alpha: 0.05),
-      splashColor: theme.colorScheme.primary.withValues(alpha: 0.1),
-    );
-  }
-
-  void _showLogoutConfirmation(BuildContext context, ColorScheme colorScheme) {
+  void _showLogoutConfirmation() {
     Get.dialog(
       AlertDialog(
         title: const Text('Confirmar Saída'),
@@ -146,7 +112,7 @@ class ProfileView extends StatelessWidget {
             child: Text(
               'Sair',
               style: TextStyle(
-                color: colorScheme.error,
+                color: Get.theme.colorScheme.error,
                 fontWeight: FontWeight.bold,
               ),
             ),
