@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const Color _seedColor = Colors.indigo;
+  static const Color _seedColor = Colors.blue;
 
   static final ThemeData lightTheme = _buildTheme(Brightness.light);
-
   static final ThemeData darkTheme = _buildTheme(Brightness.dark);
 
   static ThemeData _buildTheme(Brightness brightness) {

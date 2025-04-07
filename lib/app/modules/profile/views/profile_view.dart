@@ -8,11 +8,10 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
+    final ThemeData theme = Get.theme;
     final ColorScheme colorScheme = theme.colorScheme;
 
     const String userName = 'Aluno Exemplo';
-    const String userEmail = 'aluno.exemplo@escola.com';
     const String userClass = '3º Informática';
 
     return Scaffold(
@@ -27,8 +26,6 @@ class ProfileView extends StatelessWidget {
             },
           ),
         ],
-        elevation: 0,
-        backgroundColor: theme.scaffoldBackgroundColor,
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
@@ -58,13 +55,6 @@ class ProfileView extends StatelessWidget {
                   color: theme.colorScheme.primary,
                 ),
               ),
-              const SizedBox(height: 4.0),
-              Text(
-                userEmail,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.secondary,
-                ),
-              ),
               // const SizedBox(height: 4.0),
               // Text(
               //   'Time: $userTeam',
@@ -74,12 +64,11 @@ class ProfileView extends StatelessWidget {
               // ),
             ],
           ),
-          const SizedBox(height: 24.0),
-          const Divider(),
-          const SizedBox(height: 16.0),
+          const SizedBox(height: 40),
 
-          _buildSectionTitle(context, "Minha Conta"),
-          const SizedBox(height: 8.0),
+          _buildSectionTitle(context, "Informações"),
+          const SizedBox(height: 12.0),
+
           _buildProfileOption(
             context: context,
             icon: Icons.edit_outlined,
@@ -97,9 +86,9 @@ class ProfileView extends StatelessWidget {
             },
           ),
 
-          const SizedBox(height: 16.0),
-          const Divider(),
-          const SizedBox(height: 16.0),
+          const SizedBox(height: 24),
+          _buildSectionTitle(context, "Conta"),
+          const SizedBox(height: 12),
 
           _buildProfileOption(
             context: context,
@@ -115,17 +104,7 @@ class ProfileView extends StatelessWidget {
   }
 
   Widget _buildSectionTitle(BuildContext context, String title) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8.0, bottom: 4.0),
-      child: Text(
-        title.toUpperCase(),
-        style: Theme.of(context).textTheme.labelMedium?.copyWith(
-          color: Theme.of(context).colorScheme.primary,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 0.8,
-        ),
-      ),
-    );
+    return Text(title, style: Get.textTheme.titleLarge);
   }
 
   Widget _buildProfileOption({
@@ -136,7 +115,7 @@ class ProfileView extends StatelessWidget {
     Color? iconColor,
     Color? textColor,
   }) {
-    final ThemeData theme = Theme.of(context);
+    final ThemeData theme = Get.theme;
     final Color finalIconColor = iconColor ?? theme.colorScheme.primary;
     final Color finalTextColor = textColor ?? theme.textTheme.bodyLarge!.color!;
 
@@ -146,17 +125,8 @@ class ProfileView extends StatelessWidget {
         title,
         style: theme.textTheme.bodyLarge?.copyWith(color: finalTextColor),
       ),
-      trailing: Icon(
-        Icons.chevron_right,
-        size: 20,
-        color: theme.colorScheme.outline,
-      ),
+      trailing: Icon(Icons.chevron_right, size: 20),
       onTap: onTap,
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 8.0,
-        vertical: 4.0,
-      ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
       hoverColor: theme.colorScheme.primary.withValues(alpha: 0.05),
       splashColor: theme.colorScheme.primary.withValues(alpha: 0.1),
     );

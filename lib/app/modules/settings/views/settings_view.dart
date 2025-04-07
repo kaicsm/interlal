@@ -15,9 +15,8 @@ class SettingsView extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         children: [
           _buildSectionTitle(context, 'Aparência'),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Card(
-            elevation: 1,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Obx(
@@ -45,12 +44,11 @@ class SettingsView extends StatelessWidget {
             ),
           ),
 
-          const Divider(height: 32, thickness: 1),
-
+          const SizedBox(height: 24),
           _buildSectionTitle(context, 'Notificações'),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
+
           Card(
-            elevation: 1,
             child: Column(
               children: [
                 SwitchListTile(
@@ -86,12 +84,11 @@ class SettingsView extends StatelessWidget {
             ),
           ),
 
-          const Divider(height: 32, thickness: 1),
-
+          const SizedBox(height: 24),
           _buildSectionTitle(context, 'Informações'),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
+
           Card(
-            elevation: 1,
             child: Column(
               children: [
                 ListTile(
@@ -144,7 +141,7 @@ class SettingsView extends StatelessWidget {
   Widget _buildThemeRadioTile(ThemeMode value, String title, IconData icon) {
     return RadioListTile<ThemeMode>(
       title: Text(title),
-      secondary: Icon(icon, color: Theme.of(Get.context!).colorScheme.primary),
+      secondary: Icon(icon, color: Get.theme.colorScheme.primary),
       value: value,
       groupValue: _themeController.themeMode,
       onChanged: (ThemeMode? newValue) {
@@ -152,22 +149,12 @@ class SettingsView extends StatelessWidget {
           _themeController.setThemeMode(newValue);
         }
       },
-      activeColor: Theme.of(Get.context!).colorScheme.primary,
+      activeColor: Get.theme.colorScheme.primary,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
     );
   }
 
   Widget _buildSectionTitle(BuildContext context, String title) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 4.0, bottom: 8.0),
-      child: Text(
-        title.toUpperCase(),
-        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-          color: Theme.of(context).colorScheme.primary,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 0.8,
-        ),
-      ),
-    );
+    return Text(title, style: Get.textTheme.titleLarge);
   }
 }

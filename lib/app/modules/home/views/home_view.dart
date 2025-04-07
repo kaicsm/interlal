@@ -7,8 +7,6 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Interlal'),
@@ -21,8 +19,6 @@ class HomeView extends GetView<HomeController> {
             },
           ),
         ],
-        backgroundColor: theme.scaffoldBackgroundColor,
-        elevation: 0,
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
@@ -30,15 +26,15 @@ class HomeView extends GetView<HomeController> {
           _buildHighlightCard(context),
 
           const SizedBox(height: 24.0),
-
           _buildSectionTitle(context, 'Próximos Jogos'),
           const SizedBox(height: 12.0),
+
           _buildHorizontalGameList(context),
 
           const SizedBox(height: 24.0),
-
           _buildSectionTitle(context, 'Resultados Recentes'),
           const SizedBox(height: 12.0),
+
           _buildResultItem(
             context,
             'Futsal M.',
@@ -70,11 +66,10 @@ class HomeView extends GetView<HomeController> {
           ),
 
           const SizedBox(height: 24.0),
-
           _buildSectionTitle(context, 'Avisos Importantes'),
           const SizedBox(height: 12.0),
-          _buildNewsCard(context),
 
+          _buildNewsCard(context),
           const SizedBox(height: 20.0),
         ],
       ),
@@ -82,20 +77,13 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget _buildSectionTitle(BuildContext context, String title) {
-    return Text(
-      title,
-      style: Theme.of(
-        context,
-      ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-    );
+    return Text(title, style: Get.textTheme.titleLarge);
   }
 
   Widget _buildHighlightCard(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = Get.theme;
     final colorScheme = theme.colorScheme;
     return Card(
-      elevation: 3.0,
-      color: colorScheme.primaryContainer.withValues(alpha: 0.8),
       // child: Container(
       //   decoration: BoxDecoration(
       //     borderRadius: BorderRadius.circular(10.0),
@@ -142,7 +130,6 @@ class HomeView extends GetView<HomeController> {
               },
               icon: const Icon(Icons.info_outline, size: 18),
               label: const Text('Mais Detalhes'),
-              style: ElevatedButton.styleFrom(),
             ),
           ],
         ),
@@ -201,12 +188,11 @@ class HomeView extends GetView<HomeController> {
     required String teamB,
     required String time,
   }) {
-    final theme = Theme.of(context);
+    final theme = Get.theme;
     final colorScheme = theme.colorScheme;
     IconData sportIcon = _getSportIcon(sport);
 
     return Card(
-      elevation: 1.5,
       child: InkWell(
         onTap: () {
           Get.snackbar('Jogo', '$sport: $teamA vs $teamB');
@@ -280,7 +266,7 @@ class HomeView extends GetView<HomeController> {
     String scoreB, {
     bool highlightWinner = true,
   }) {
-    final theme = Theme.of(context);
+    final theme = Get.theme;
     final colorScheme = theme.colorScheme;
     final scoreAInt = int.tryParse(scoreA) ?? 0;
     final scoreBInt = int.tryParse(scoreB) ?? 0;
@@ -289,16 +275,16 @@ class HomeView extends GetView<HomeController> {
           highlightWinner && scoreAInt > scoreBInt ? FontWeight.bold : null,
       color:
           highlightWinner && scoreAInt > scoreBInt
-              ? colorScheme.onPrimaryFixedVariant
-              : null,
+              ? colorScheme.onSurfaceVariant
+              : colorScheme.onSurface,
     );
     final teamBStyle = theme.textTheme.bodyLarge?.copyWith(
       fontWeight:
           highlightWinner && scoreBInt > scoreAInt ? FontWeight.bold : null,
       color:
           highlightWinner && scoreBInt > scoreAInt
-              ? colorScheme.onPrimaryFixedVariant
-              : null,
+              ? colorScheme.onSurfaceVariant
+              : colorScheme.onSurface,
     );
     final scoreStyle = theme.textTheme.bodyLarge?.copyWith(
       fontWeight: FontWeight.bold,
@@ -306,8 +292,6 @@ class HomeView extends GetView<HomeController> {
     );
 
     return Card(
-      elevation: 0.5,
-      margin: const EdgeInsets.only(bottom: 8.0),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
         child: Row(
@@ -344,9 +328,8 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget _buildNewsCard(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = Get.theme;
     return Card(
-      elevation: 1.0,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
