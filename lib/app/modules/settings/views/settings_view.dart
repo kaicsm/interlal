@@ -26,16 +26,19 @@ class SettingsView extends GetView<SettingsController> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     _buildThemeRadioTile(
+                      context,
                       ThemeMode.light,
                       'Claro',
                       Icons.wb_sunny_outlined,
                     ),
                     _buildThemeRadioTile(
+                      context,
                       ThemeMode.dark,
                       'Escuro',
                       Icons.nightlight_outlined,
                     ),
                     _buildThemeRadioTile(
+                      context,
                       ThemeMode.system,
                       'Padrão do Sistema',
                       Icons.settings_suggest_outlined,
@@ -134,10 +137,15 @@ class SettingsView extends GetView<SettingsController> {
     );
   }
 
-  Widget _buildThemeRadioTile(ThemeMode value, String title, IconData icon) {
+  Widget _buildThemeRadioTile(
+    BuildContext context,
+    ThemeMode value,
+    String title,
+    IconData icon,
+  ) {
     return RadioListTile<ThemeMode>(
       title: Text(title),
-      secondary: Icon(icon, color: Get.theme.colorScheme.primary),
+      secondary: Icon(icon, color: context.theme.colorScheme.primary),
       value: value,
       groupValue: _themeController.themeMode,
       onChanged: (ThemeMode? newValue) {
@@ -145,7 +153,7 @@ class SettingsView extends GetView<SettingsController> {
           _themeController.setThemeMode(newValue);
         }
       },
-      activeColor: Get.theme.colorScheme.primary,
+      activeColor: context.theme.colorScheme.primary,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
     );
   }

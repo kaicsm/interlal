@@ -34,25 +34,25 @@ class ProfileView extends GetView<ProfileController> {
             children: [
               CircleAvatar(
                 radius: 50,
-                backgroundColor: Get.theme.colorScheme.primaryContainer,
+                backgroundColor: context.theme.colorScheme.primaryContainer,
                 child: Icon(
                   Icons.person,
                   size: 50,
-                  color: Get.theme.colorScheme.onPrimaryContainer,
+                  color: context.theme.colorScheme.onPrimaryContainer,
                 ),
               ),
               const SizedBox(height: 16.0),
               Text(
                 userName,
-                style: Get.theme.textTheme.headlineSmall?.copyWith(
+                style: context.theme.textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 4.0),
               Text(
                 userClass,
-                style: Get.theme.textTheme.bodyLarge?.copyWith(
-                  color: Get.theme.colorScheme.primary,
+                style: context.theme.textTheme.bodyLarge?.copyWith(
+                  color: context.theme.colorScheme.primary,
                 ),
               ),
               // const SizedBox(height: 4.0),
@@ -89,16 +89,16 @@ class ProfileView extends GetView<ProfileController> {
           ActionCardTile(
             icon: Icons.logout,
             title: 'Sair da Conta',
-            iconColor: Get.theme.colorScheme.error,
-            textColor: Get.theme.colorScheme.error,
-            onTap: () => _showLogoutConfirmation(),
+            iconColor: context.theme.colorScheme.error,
+            textColor: context.theme.colorScheme.error,
+            onTap: () => _showLogoutConfirmation(context),
           ),
         ],
       ),
     );
   }
 
-  void _showLogoutConfirmation() {
+  void _showLogoutConfirmation(BuildContext context) {
     Get.dialog(
       AlertDialog(
         title: const Text('Confirmar Saída'),
@@ -112,7 +112,7 @@ class ProfileView extends GetView<ProfileController> {
             child: Text(
               'Sair',
               style: TextStyle(
-                color: Get.theme.colorScheme.error,
+                color: context.theme.colorScheme.error,
                 fontWeight: FontWeight.bold,
               ),
             ),

@@ -62,12 +62,11 @@ AppSettings _appSettingsDeserialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = AppSettings(
-    themeMode:
-        _AppSettingsthemeModeValueEnumMap[reader.readByteOrNull(offsets[0])] ??
-            ThemeMode.system,
-  );
+  final object = AppSettings();
   object.id = id;
+  object.themeMode =
+      _AppSettingsthemeModeValueEnumMap[reader.readByteOrNull(offsets[0])] ??
+          ThemeMode.system;
   return object;
 }
 

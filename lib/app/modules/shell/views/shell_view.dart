@@ -12,14 +12,7 @@ class ShellView extends GetView<ShellController> {
         () => IndexedStack(
           index: controller.currentIndex,
           children:
-              controller.pages
-                  .map(
-                    (pageInfo) => KeyedSubtree(
-                      key: ValueKey(pageInfo.name),
-                      child: pageInfo.page,
-                    ),
-                  )
-                  .toList(),
+              controller.pages.map((pageInfo) => pageInfo.page()).toList(),
         ),
       ),
       bottomNavigationBar: Obx(
@@ -27,11 +20,11 @@ class ShellView extends GetView<ShellController> {
           selectedIndex: controller.currentIndex,
           onDestinationSelected: (index) => controller.setCurrentIndex(index),
           destinations:
-              controller.pages.map((pageInfo) {
+              controller.pages.map((destination) {
                 return NavigationDestination(
-                  icon: Icon(pageInfo.icon),
-                  selectedIcon: Icon(pageInfo.selectedIcon),
-                  label: pageInfo.name,
+                  icon: Icon(destination.icon),
+                  selectedIcon: Icon(destination.selectedIcon),
+                  label: destination.name,
                 );
               }).toList(),
         ),

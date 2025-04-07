@@ -26,19 +26,20 @@ class ActionCardTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Get.theme;
-    final Color finalIconColor = iconColor ?? theme.colorScheme.primary;
+    final Color finalIconColor = iconColor ?? context.theme.colorScheme.primary;
     final Color finalTextColor =
         textColor ??
-        theme.textTheme.bodyLarge?.color ??
-        theme.colorScheme.onSurface;
+        context.theme.textTheme.bodyLarge?.color ??
+        context.theme.colorScheme.onSurface;
 
     return Card(
       child: ListTile(
         leading: Icon(icon, color: finalIconColor),
         title: Text(
           title,
-          style: theme.textTheme.bodyLarge?.copyWith(color: finalTextColor),
+          style: context.theme.textTheme.bodyLarge?.copyWith(
+            color: finalTextColor,
+          ),
         ),
         trailing:
             trailing ??

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_instance/src/extension_instance.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 import 'package:interlal/app/core/services/database_service.dart';
 import 'package:interlal/app/data/models/app_settings.dart';
 import 'package:logger/logger.dart';
@@ -11,16 +10,18 @@ class ThemeController extends GetxController {
 
   static const int _settingsId = 0;
 
+  late final DatabaseService _databaseService;
+
   @override
   void onInit() {
     super.onInit();
+    _databaseService = Get.find<DatabaseService>();
     _loadThemePreference();
   }
 
   Future<void> _loadThemePreference() async {
     try {
-      final isar = Get.find<DatabaseService>().isarInstance;
-      final settings = await isar.appSettings.get(_settingsId);
+      final settings = await _databaseService.isarInstance.appSettings.get(_settingsId);
 
       if (settings != null) {
         Logger().i('Loaded theme preference');
@@ -40,10 +41,12 @@ class ThemeController extends GetxController {
 
   Future<void> _saveThemePreference(ThemeMode mode) async {
     try {
-      final isar = Get.find<DatabaseService>().isarInstance;
-      await isar.writeTxn(() async {
-        final settings = AppSettings(themeMode: mode)..id = _settingsId;
-        await isar.appSettings.put(settings);
+      await _databaseService.isarInstance.writeTxn(() async {
+        final settings =
+            AppSettings()
+              ..id = _settingsId
+              ..themeMode = mode;
+        await _databaseService.isarInstance.appSettings.put(settings);
         Logger().i('Saved theme preference');
       });
     } catch (e) {
@@ -54,6 +57,7 @@ class ThemeController extends GetxController {
   void _updateThemeState(ThemeMode mode, {bool save = true}) {
     if (_themeMode.value != mode) {
       _themeMode.value = mode;
+      Get.changeThemeMode(mode);
 
       Logger().i('Updated theme state');
       if (save) {

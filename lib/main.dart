@@ -4,25 +4,22 @@ import 'package:get/instance_manager.dart';
 import 'package:interlal/app.dart';
 import 'package:interlal/app/core/controllers/theme_controller.dart';
 import 'package:interlal/app/core/services/database_service.dart';
-import 'package:logger/logger.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   setupSystemChrome();
-  await initializeCoreServices();
+  await initializeServices();
+
   runApp(App());
 }
 
-Future<void> initializeCoreServices() async {
-  await Get.putAsync<DatabaseService>(() async {
-    final service = DatabaseService();
-    await service.initializeDatabase();
-    return service;
-  }, permanent: true);
-
-  Get.put<ThemeController>(ThemeController(), permanent: true);
-
-  Logger().i("Core services initialized successfully.");
+Future<void> initializeServices() async {
+  await Get.putAsync(
+    () => DatabaseService().initializeDatabase(),
+    permanent: true,
+  );
+  Get.lazyPut(() => ThemeController(), fenix: true);
 }
 
 void setupSystemChrome() {

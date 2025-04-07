@@ -15,7 +15,7 @@ class SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: padding,
-      child: Text(title, style: Get.textTheme.titleLarge),
+      child: Text(title, style: context.textTheme.titleLarge),
     );
   }
 }

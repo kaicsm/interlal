@@ -9,7 +9,7 @@ class RankingView extends GetView<RankingController> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Get.theme;
+    final theme = context.theme;
     final colorScheme = theme.colorScheme;
 
     return Scaffold(
@@ -22,12 +22,12 @@ class RankingView extends GetView<RankingController> {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [Expanded(child: Obx(() => _buildRankingContent()))],
+        children: [Expanded(child: Obx(() => _buildRankingContent(context)))],
       ),
     );
   }
 
-  Widget _buildRankingContent() {
+  Widget _buildRankingContent(BuildContext context) {
     final String selectedRankingType = controller.selectedRanking.value;
     final bool showTeams = selectedRankingType == 'Times';
     final bool showPlayers = selectedRankingType == 'Jogadores';
@@ -51,6 +51,7 @@ class RankingView extends GetView<RankingController> {
               items: teams,
               itemBuilder:
                   (item) => _buildTeamRankItem(
+                    context,
                     item['pos'],
                     item['name'],
                     item['points'],
@@ -68,6 +69,7 @@ class RankingView extends GetView<RankingController> {
               items: players,
               itemBuilder:
                   (item) => _buildPlayerRankItem(
+                    context,
                     item['pos'],
                     item['name'],
                     item['team'],
@@ -101,8 +103,13 @@ class RankingView extends GetView<RankingController> {
     );
   }
 
-  Widget _buildTeamRankItem(int position, String teamName, int points) {
-    final theme = Get.theme;
+  Widget _buildTeamRankItem(
+    BuildContext context,
+    int position,
+    String teamName,
+    int points,
+  ) {
+    final theme = context.theme;
     final colorScheme = theme.colorScheme;
 
     return ListTile(
@@ -136,12 +143,13 @@ class RankingView extends GetView<RankingController> {
   }
 
   Widget _buildPlayerRankItem(
+    BuildContext context,
     int position,
     String playerName,
     String teamName,
     int score,
   ) {
-    final theme = Get.theme;
+    final theme = context.theme;
     final colorScheme = theme.colorScheme;
 
     String scoreLabel = 'Gols';

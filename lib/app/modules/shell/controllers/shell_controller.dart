@@ -3,6 +3,7 @@ import 'package:get/state_manager.dart';
 import 'package:interlal/app/modules/home/views/home_view.dart';
 import 'package:interlal/app/modules/profile/views/profile_view.dart';
 import 'package:interlal/app/modules/ranking/views/ranking_view.dart';
+import 'package:interlal/app/modules/settings/views/settings_view.dart';
 
 class ShellController extends GetxController {
   final List<PageInfo> _pages = [
@@ -10,20 +11,26 @@ class ShellController extends GetxController {
       name: 'Inicio',
       icon: Icons.home_outlined,
       selectedIcon: Icons.home,
-      page: HomeView(),
+      page: () => HomeView(),
     ),
     PageInfo(
       name: 'Ranking',
       icon: Icons.leaderboard_outlined,
       selectedIcon: Icons.leaderboard,
-      page: RankingView(),
+      page: () => RankingView(),
     ),
     PageInfo(
       name: 'Perfil',
       icon: Icons.person_outline,
       selectedIcon: Icons.person,
-      page:ProfileView(),
+      page: () => ProfileView(),
     ),
+    PageInfo(
+      name: 'Configurações',
+      icon: Icons.settings_outlined,
+      selectedIcon: Icons.settings,
+      page: () => SettingsView()
+    )
   ];
   List<PageInfo> get pages => _pages;
 
@@ -39,12 +46,12 @@ class PageInfo {
   final String name;
   final IconData icon;
   final IconData selectedIcon;
-  final Widget  page;
+  final Widget Function() page;
 
   PageInfo({
     required this.name,
+    required this.page,
     required this.icon,
     required this.selectedIcon,
-    required this.page,
   });
 }

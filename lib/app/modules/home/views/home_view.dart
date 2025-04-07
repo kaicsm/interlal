@@ -25,17 +25,31 @@ class HomeView extends GetView<HomeController> {
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          _buildHighlightCard(),
+          _buildHighlightCard(context),
 
           SectionTitle('Próximos Jogos'),
 
-          _buildHorizontalGameList(),
+          _buildHorizontalGameList(context),
 
           SectionTitle('Resultados Recentes'),
 
-          _buildResultItem('Futsal M.', '3º Info', '2', '3º Edif', '1'),
-          _buildResultItem('Vôlei F.', '1º Agro', '2', '1º Info', '0'),
-          _buildResultItem('Basquete M.', '2º Info', '35', '2º Edif', '42'),
+          _buildResultItem(
+            context,
+            'Futsal M.',
+            '3º Info',
+            '2',
+            '3º Edif',
+            '1',
+          ),
+          _buildResultItem(context, 'Vôlei F.', '1º Agro', '2', '1º Info', '0'),
+          _buildResultItem(
+            context,
+            'Basquete M.',
+            '2º Info',
+            '35',
+            '2º Edif',
+            '42',
+          ),
           Center(
             child: Padding(
               padding: const EdgeInsets.only(top: 8.0),
@@ -51,15 +65,15 @@ class HomeView extends GetView<HomeController> {
 
           SectionTitle('Avisos Importantes'),
 
-          _buildNewsCard(),
+          _buildNewsCard(context),
           const SizedBox(height: 20.0),
         ],
       ),
     );
   }
 
-  Widget _buildHighlightCard() {
-    final theme = Get.theme;
+  Widget _buildHighlightCard(BuildContext context) {
+    final theme = context.theme;
     final colorScheme = theme.colorScheme;
     return Card(
       // child: Container(
@@ -116,7 +130,7 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget _buildHorizontalGameList() {
+  Widget _buildHorizontalGameList(BuildContext context) {
     // TODO: Substituir por dados reais
     final games = [
       {
@@ -148,6 +162,7 @@ class HomeView extends GetView<HomeController> {
         itemBuilder: (context, index) {
           final game = games[index];
           return _buildGameCard(
+            context: context,
             sport: game['sport']!,
             teamA: game['teamA']!,
             teamB: game['teamB']!,
@@ -159,12 +174,13 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget _buildGameCard({
+    required BuildContext context,
     required String sport,
     required String teamA,
     required String teamB,
     required String time,
   }) {
-    final theme = Get.theme;
+    final theme = context.theme;
     final colorScheme = theme.colorScheme;
     IconData sportIcon = IconHelper.getSportIcon(sport);
 
@@ -234,6 +250,7 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget _buildResultItem(
+    BuildContext context,
     String sport,
     String teamA,
     String scoreA,
@@ -241,7 +258,7 @@ class HomeView extends GetView<HomeController> {
     String scoreB, {
     bool highlightWinner = true,
   }) {
-    final theme = Get.theme;
+    final theme = context.theme;
     final colorScheme = theme.colorScheme;
     final scoreAInt = int.tryParse(scoreA) ?? 0;
     final scoreBInt = int.tryParse(scoreB) ?? 0;
@@ -310,8 +327,8 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget _buildNewsCard() {
-    final theme = Get.theme;
+  Widget _buildNewsCard(BuildContext context) {
+    final theme = context.theme;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
