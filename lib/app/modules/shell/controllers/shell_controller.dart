@@ -3,7 +3,6 @@ import 'package:get/state_manager.dart';
 import 'package:interlal/app/modules/home/views/home_view.dart';
 import 'package:interlal/app/modules/profile/views/profile_view.dart';
 import 'package:interlal/app/modules/ranking/views/ranking_view.dart';
-import 'package:interlal/app/modules/settings/views/settings_view.dart';
 
 class ShellController extends GetxController {
   final List<PageInfo> _pages = [
@@ -25,12 +24,6 @@ class ShellController extends GetxController {
       selectedIcon: Icons.person,
       page: () => ProfileView(),
     ),
-    PageInfo(
-      name: 'Configurações',
-      icon: Icons.settings_outlined,
-      selectedIcon: Icons.settings,
-      page: () => SettingsView()
-    )
   ];
   List<PageInfo> get pages => _pages;
 
