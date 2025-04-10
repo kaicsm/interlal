@@ -36,18 +36,25 @@ class HomeView extends GetView<HomeController> {
           _buildResultItem(
             context,
             'Futsal M.',
-            '3º Info',
+            '3º LOG A',
             '2',
-            '3º Edif',
+            '3º LOG B',
             '1',
           ),
-          _buildResultItem(context, 'Vôlei F.', '1º Agro', '2', '1º Info', '0'),
+          _buildResultItem(
+            context,
+            'Vôlei F.',
+            '1º LOG A',
+            '2',
+            '1º TDS A',
+            '0',
+          ),
           _buildResultItem(
             context,
             'Basquete M.',
-            '2º Info',
+            '2º TDS A',
             '35',
-            '2º Edif',
+            '2º LOG B',
             '42',
           ),
           Center(
@@ -76,56 +83,57 @@ class HomeView extends GetView<HomeController> {
     final theme = context.theme;
     final colorScheme = theme.colorScheme;
     return Card(
-      // child: Container(
-      //   decoration: BoxDecoration(
-      //     borderRadius: BorderRadius.circular(10.0),
-      //     image: DecorationImage(
-      //       image: AssetImage('assets/images/sports_banner.png'),
-      //       fit: BoxFit.cover,
-      //       colorFilter: ColorFilter.mode(
-      //         Colors.black.withOpacity(0.4),
-      //         BlendMode.darken,
-      //       ),
-      //     ),
-      //   ),
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'HOJE ÀS 15:00 - QUADRA PRINCIPAL',
-              style: theme.textTheme.labelMedium?.copyWith(
-                color: colorScheme.onPrimaryContainer.withValues(alpha: 0.8),
-                fontWeight: FontWeight.bold,
-              ),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
+            image: AssetImage('assets/images/futsal_banner.png'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.black.withValues(alpha: 0.7),
+              BlendMode.darken,
             ),
-            const SizedBox(height: 8.0),
-            Text(
-              'Final Futsal Masculino',
-              style: theme.textTheme.headlineSmall?.copyWith(
-                color: colorScheme.onPrimaryContainer,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 4.0),
-            Text(
-              '3º Informática vs 3º Edificações',
-              style: theme.textTheme.bodyLarge?.copyWith(
-                color: colorScheme.onPrimaryContainer.withValues(alpha: 0.9),
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            ElevatedButton.icon(
-              onPressed: () {
-                Get.snackbar('Ação', 'Ver detalhes do jogo');
-              },
-              icon: const Icon(Icons.info_outline, size: 18),
-              label: const Text('Mais Detalhes'),
-            ),
-          ],
+          ),
         ),
-        // ),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'HOJE ÀS 15:00 - QUADRA',
+                style: theme.textTheme.labelMedium?.copyWith(
+                  color: colorScheme.onPrimaryContainer.withValues(alpha: 0.8),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8.0),
+              Text(
+                'Final Futsal Masculino',
+                style: theme.textTheme.headlineSmall?.copyWith(
+                  color: colorScheme.onPrimaryContainer,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 4.0),
+              Text(
+                '3º TDS A vs 3º LOG A',
+                style: theme.textTheme.bodyLarge?.copyWith(
+                  color: colorScheme.onPrimaryContainer.withValues(alpha: 0.9),
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              ElevatedButton.icon(
+                onPressed: () {
+                  Get.snackbar('Ação', 'Ver detalhes do jogo');
+                },
+                icon: const Icon(Icons.info_outline, size: 18),
+                label: const Text('Mais Detalhes'),
+              ),
+            ],
+          ),
+          // ),
+        ),
       ),
     );
   }
@@ -135,26 +143,26 @@ class HomeView extends GetView<HomeController> {
     final games = [
       {
         'sport': 'Vôlei F.',
-        'teamA': '1º Info',
-        'teamB': '1º Edif',
+        'teamA': '1º LOG A',
+        'teamB': '1º TDS A',
         'time': '14:00',
       },
       {
         'sport': 'Basquete M.',
-        'teamA': '2º Agro',
-        'teamB': '2º Info',
+        'teamA': '2º LOG B',
+        'teamB': '2º TDS B',
         'time': '16:00',
       },
       {
         'sport': 'Futsal F.',
-        'teamA': '3º Edif',
-        'teamB': '3º Agro',
+        'teamA': '3º LOG A',
+        'teamB': '3º LOG B',
         'time': '17:00',
       },
     ];
 
     return SizedBox(
-      height: 130,
+      height: 135,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: games.length,
@@ -210,7 +218,7 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ],
               ),
-              // const SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 teamA,
                 style: theme.textTheme.bodyMedium?.copyWith(
@@ -264,18 +272,22 @@ class HomeView extends GetView<HomeController> {
     final scoreBInt = int.tryParse(scoreB) ?? 0;
     final teamAStyle = theme.textTheme.bodyLarge?.copyWith(
       fontWeight:
-          highlightWinner && scoreAInt > scoreBInt ? FontWeight.bold : null,
+          highlightWinner && scoreAInt > scoreBInt
+              ? FontWeight.bold
+              : FontWeight.normal,
       color:
           highlightWinner && scoreAInt > scoreBInt
-              ? colorScheme.onSurfaceVariant
+              ? colorScheme.primary
               : colorScheme.onSurface,
     );
     final teamBStyle = theme.textTheme.bodyLarge?.copyWith(
       fontWeight:
-          highlightWinner && scoreBInt > scoreAInt ? FontWeight.bold : null,
+          highlightWinner && scoreBInt > scoreAInt
+              ? FontWeight.bold
+              : FontWeight.normal,
       color:
           highlightWinner && scoreBInt > scoreAInt
-              ? colorScheme.onSurfaceVariant
+              ? colorScheme.primary
               : colorScheme.onSurface,
     );
     final scoreStyle = theme.textTheme.bodyLarge?.copyWith(
@@ -285,11 +297,6 @@ class HomeView extends GetView<HomeController> {
 
     return Card(
       child: ListTile(
-        leading: Icon(
-          IconHelper.getSportIcon(sport),
-          size: 24,
-          color: colorScheme.secondary,
-        ),
         title: Row(
           children: [
             Expanded(
@@ -302,7 +309,12 @@ class HomeView extends GetView<HomeController> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text('$scoreA - $scoreB', style: scoreStyle),
+              child: Column(
+                children: [
+                  Text('$scoreA - $scoreB', style: scoreStyle),
+                  Text(sport),
+                ],
+              ),
             ),
             Expanded(
               child: Text(
@@ -315,10 +327,7 @@ class HomeView extends GetView<HomeController> {
           ],
         ),
         dense: true,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 8.0,
-        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
         onTap: () {
           // TODO: Implementar tela de detalhes
           Get.snackbar('Detalhes', 'Clique para ver mais detalhes');
@@ -336,14 +345,14 @@ class HomeView extends GetView<HomeController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Tabela de Jogos Atualizada!',
+              'Goleada do artilheiro do 2º TDS A',
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 8.0),
             Text(
-              'Confira os horários e locais atualizados para as quartas de final na seção "Jogos". Não perca!',
+              'Guilherme do 2º TDS A marca no futsal 3 gols contra o 1º LOG B!',
               style: theme.textTheme.bodyMedium,
             ),
             const SizedBox(height: 8.0),
