@@ -271,29 +271,20 @@ class HomeView extends GetView<HomeController> {
     final scoreAInt = int.tryParse(scoreA) ?? 0;
     final scoreBInt = int.tryParse(scoreB) ?? 0;
     final teamAStyle = theme.textTheme.bodyLarge?.copyWith(
-      fontWeight:
-          highlightWinner && scoreAInt > scoreBInt
-              ? FontWeight.bold
-              : FontWeight.normal,
+      fontWeight: scoreAInt > scoreBInt ? FontWeight.bold : FontWeight.normal,
       color:
           highlightWinner && scoreAInt > scoreBInt
               ? colorScheme.primary
               : colorScheme.onSurface,
     );
     final teamBStyle = theme.textTheme.bodyLarge?.copyWith(
-      fontWeight:
-          highlightWinner && scoreBInt > scoreAInt
-              ? FontWeight.bold
-              : FontWeight.normal,
+      fontWeight: scoreBInt > scoreAInt ? FontWeight.bold : FontWeight.normal,
       color:
           highlightWinner && scoreBInt > scoreAInt
               ? colorScheme.primary
               : colorScheme.onSurface,
     );
-    final scoreStyle = theme.textTheme.bodyLarge?.copyWith(
-      fontWeight: FontWeight.bold,
-      color: colorScheme.primary,
-    );
+    final scoreStyle = theme.textTheme.bodyLarge;
 
     return Card(
       child: ListTile(
@@ -312,7 +303,12 @@ class HomeView extends GetView<HomeController> {
               child: Column(
                 children: [
                   Text('$scoreA - $scoreB', style: scoreStyle),
-                  Text(sport),
+                  Text(
+                    sport,
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
                 ],
               ),
             ),

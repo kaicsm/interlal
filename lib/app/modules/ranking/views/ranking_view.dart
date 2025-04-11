@@ -89,17 +89,14 @@ class RankingView extends GetView<RankingController> {
     required List<Map<String, dynamic>> items,
     required Widget Function(Map<String, dynamic>) itemBuilder,
   }) {
-    return Card(
-      child: ListView.separated(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: items.length,
-        separatorBuilder: (context, index) => Divider(height: 1, indent: 60),
-        itemBuilder: (context, index) {
-          return itemBuilder(items[index]);
-        },
-        padding: EdgeInsets.zero,
-      ),
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        return itemBuilder(items[index]);
+      },
+      padding: EdgeInsets.zero,
     );
   }
 
@@ -112,33 +109,35 @@ class RankingView extends GetView<RankingController> {
     final theme = context.theme;
     final colorScheme = theme.colorScheme;
 
-    return ListTile(
-      leading: CircleAvatar(
-        radius: 15,
-        backgroundColor:
-            position <= 3
-                ? colorScheme.primaryContainer
-                : colorScheme.surfaceContainerHighest,
-        child: Text(
-          position.toString(),
-          style: theme.textTheme.labelMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-            color:
-                position <= 3
-                    ? colorScheme.onPrimaryContainer
-                    : colorScheme.onSurfaceVariant,
+    return Card(
+      child: ListTile(
+        leading: CircleAvatar(
+          radius: 15,
+          backgroundColor:
+              position <= 3
+                  ? colorScheme.primaryContainer
+                  : colorScheme.surfaceContainerHighest,
+          child: Text(
+            position.toString(),
+            style: theme.textTheme.labelMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color:
+                  position <= 3
+                      ? colorScheme.onPrimaryContainer
+                      : colorScheme.onSurfaceVariant,
+            ),
           ),
         ),
-      ),
-      title: Text(teamName, style: theme.textTheme.bodyLarge),
-      trailing: Text(
-        '$points pts',
-        style: theme.textTheme.bodyMedium?.copyWith(
-          color: colorScheme.secondary,
-          fontWeight: FontWeight.bold,
+        title: Text(teamName, style: theme.textTheme.bodyLarge),
+        trailing: Text(
+          '$points pts',
+          style: theme.textTheme.bodyMedium?.copyWith(
+            color: colorScheme.secondary,
+            fontWeight: FontWeight.bold,
+          ),
         ),
+        dense: true,
       ),
-      dense: true,
     );
   }
 
@@ -160,37 +159,41 @@ class RankingView extends GetView<RankingController> {
       scoreLabel = 'Pts';
     }
 
-    return ListTile(
-      leading: CircleAvatar(
-        radius: 15,
-        backgroundColor:
-            position <= 3
-                ? colorScheme.primaryContainer
-                : colorScheme.surfaceContainerHighest,
-        child: Text(
-          position.toString(),
-          style: theme.textTheme.labelMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-            color:
-                position <= 3
-                    ? colorScheme.onPrimaryContainer
-                    : colorScheme.onSurfaceVariant,
+    return Card(
+      child: ListTile(
+        leading: CircleAvatar(
+          radius: 15,
+          backgroundColor:
+              position <= 3
+                  ? colorScheme.primaryContainer
+                  : colorScheme.surfaceContainerHighest,
+          child: Text(
+            position.toString(),
+            style: theme.textTheme.labelMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color:
+                  position <= 3
+                      ? colorScheme.onPrimaryContainer
+                      : colorScheme.onSurfaceVariant,
+            ),
           ),
         ),
-      ),
-      title: Text(playerName, style: theme.textTheme.bodyLarge),
-      subtitle: Text(
-        teamName,
-        style: theme.textTheme.bodySmall?.copyWith(color: colorScheme.outline),
-      ),
-      trailing: Text(
-        '$score $scoreLabel',
-        style: theme.textTheme.bodyMedium?.copyWith(
-          color: colorScheme.secondary,
-          fontWeight: FontWeight.bold,
+        title: Text(playerName, style: theme.textTheme.bodyLarge),
+        subtitle: Text(
+          teamName,
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: colorScheme.outline,
+          ),
         ),
+        trailing: Text(
+          '$score $scoreLabel',
+          style: theme.textTheme.bodyMedium?.copyWith(
+            color: colorScheme.secondary,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        dense: true,
       ),
-      dense: true,
     );
   }
 }
