@@ -7,19 +7,31 @@ import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 
 class DatabaseService extends GetxService {
-  Isar? _isar;
-  Isar get isarInstance => _isar!;
+  static final Logger _log = Logger();
+  static DatabaseService? _instance;
 
-  Future<DatabaseService> initializeDatabase() async {
-    if (_isar == null) {
-      try {
-        final Directory dir = await getApplicationDocumentsDirectory();
-        _isar = await Isar.open([AppSettingsSchema], directory: dir.path);
-        Logger().i('Database initialized');
-      } catch (e) {
-        Logger().e('Error initializing Isar: $e');
-        rethrow;
-      }
+  late final Isar _isar;
+  Isar get isarInstance => _isar;
+
+  DatabaseService._internal();
+
+  static Future<DatabaseService> init() async {
+    if (_instance != null) return _instance!;
+    final service = DatabaseService._internal();
+    await service._initialize();
+    return service;
+  }
+
+  Future<DatabaseService> _initialize() async {
+    try {
+      final Directory dir = await getApplicationDocumentsDirectory();
+      final schemas = [AppSettingsSchema];
+
+      _isar = await Isar.open(schemas, directory: dir.path);
+      _log.i('Database initialized');
+    } catch (e) {
+      _log.e('Error initializing Isar: $e');
+      rethrow;
     }
     return this;
   }

@@ -5,6 +5,8 @@ import 'package:interlal/app/data/models/app_settings.dart';
 import 'package:logger/logger.dart';
 
 class ThemeController extends GetxController {
+  static final Logger _log = Logger();
+
   final Rx<ThemeMode> _themeMode = ThemeMode.system.obs;
   ThemeMode get themeMode => _themeMode.value;
 
@@ -21,20 +23,22 @@ class ThemeController extends GetxController {
 
   Future<void> _loadThemePreference() async {
     try {
-      final settings = await _databaseService.isarInstance.appSettings.get(_settingsId);
+      final settings = await _databaseService.isarInstance.appSettings.get(
+        _settingsId,
+      );
 
       if (settings != null) {
-        Logger().i('Loaded theme preference');
+        _log.i('Loaded theme preference');
         _updateThemeState(
           settings.themeMode,
           save: false,
         ); // Atualiza o estado do tema sem salvar novamente
       } else {
-        Logger().i('No theme preference found');
+        _log.i('No theme preference found');
         await _saveThemePreference(ThemeMode.system);
       }
     } catch (e) {
-      Logger().e('Failed to load theme preference: $e');
+      _log.e('Failed to load theme preference: $e');
       _updateThemeState(ThemeMode.system, save: false);
     }
   }
@@ -47,22 +51,22 @@ class ThemeController extends GetxController {
               ..id = _settingsId
               ..themeMode = mode;
         await _databaseService.isarInstance.appSettings.put(settings);
-        Logger().i('Saved theme preference');
+        _log.i('Saved theme preference');
       });
     } catch (e) {
-      Logger().e('Failed to save theme preference: $e');
+      _log.e('Failed to save theme preference: $e');
     }
   }
 
   void _updateThemeState(ThemeMode mode, {bool save = true}) {
-    if (_themeMode.value != mode) {
-      _themeMode.value = mode;
-      Get.changeThemeMode(mode);
+    if (_themeMode.value == mode) return;
 
-      Logger().i('Updated theme state');
-      if (save) {
-        _saveThemePreference(mode);
-      }
+    _themeMode.value = mode;
+    Get.changeThemeMode(mode);
+
+    _log.i('Updated theme state');
+    if (save) {
+      _saveThemePreference(mode);
     }
   }
 

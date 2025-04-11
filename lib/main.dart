@@ -7,19 +7,16 @@ import 'package:interlal/app/core/services/database_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   setupSystemChrome();
+
   await initializeServices();
 
   runApp(App());
 }
 
 Future<void> initializeServices() async {
-  await Get.putAsync(
-    () => DatabaseService().initializeDatabase(),
-    permanent: true,
-  );
-  Get.lazyPut(() => ThemeController(), fenix: true);
+  await Get.putAsync<DatabaseService>(() => DatabaseService.init());
+  Get.lazyPut<ThemeController>(() => ThemeController(), fenix: true);
 }
 
 void setupSystemChrome() {
