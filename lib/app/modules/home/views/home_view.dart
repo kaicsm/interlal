@@ -263,26 +263,15 @@ class HomeView extends GetView<HomeController> {
     String teamA,
     String scoreA,
     String teamB,
-    String scoreB, {
-    bool highlightWinner = true,
-  }) {
+    String scoreB,
+    // bool highlightWinner = true
+  ) {
     final theme = context.theme;
-    final colorScheme = theme.colorScheme;
-    final scoreAInt = int.tryParse(scoreA) ?? 0;
-    final scoreBInt = int.tryParse(scoreB) ?? 0;
     final teamAStyle = theme.textTheme.bodyLarge?.copyWith(
-      fontWeight: scoreAInt > scoreBInt ? FontWeight.bold : FontWeight.normal,
-      color:
-          highlightWinner && scoreAInt > scoreBInt
-              ? colorScheme.primary
-              : colorScheme.onSurface,
+      fontWeight: FontWeight.bold,
     );
     final teamBStyle = theme.textTheme.bodyLarge?.copyWith(
-      fontWeight: scoreBInt > scoreAInt ? FontWeight.bold : FontWeight.normal,
-      color:
-          highlightWinner && scoreBInt > scoreAInt
-              ? colorScheme.primary
-              : colorScheme.onSurface,
+      fontWeight: FontWeight.bold,
     );
     final scoreStyle = theme.textTheme.bodyLarge;
 
