@@ -12,7 +12,7 @@ class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     const String userName = 'Aluno Exemplo';
-    const String userClass = '3º Informática';
+    const String userClass = '3º TDS A';
 
     return Scaffold(
       appBar: AppBar(

@@ -19,31 +19,61 @@ class SettingsView extends GetView<SettingsController> {
         children: [
           SectionTitle('Aparência'),
           Card(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Obx(
-                () => Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    _buildThemeRadioTile(
-                      context,
-                      ThemeMode.light,
-                      'Claro',
-                      Icons.wb_sunny_outlined,
-                    ),
-                    _buildThemeRadioTile(
-                      context,
-                      ThemeMode.dark,
-                      'Escuro',
-                      Icons.nightlight_outlined,
-                    ),
-                    _buildThemeRadioTile(
-                      context,
-                      ThemeMode.system,
-                      'Padrão do Sistema',
-                      Icons.settings_suggest_outlined,
-                    ),
-                  ],
+            child: Obx(
+              () => ListTile(
+                leading: Icon(
+                  _getThemeIcon(_themeController.themeMode),
+                  color: context.theme.colorScheme.primary,
+                ),
+                title: const Text('Tema'),
+                subtitle: Text(_getThemeName(_themeController.themeMode)),
+                trailing: PopupMenuButton<ThemeMode>(
+                  icon: const Icon(Icons.arrow_drop_down),
+                  onSelected: (ThemeMode value) {
+                    _themeController.setThemeMode(value);
+                  },
+                  itemBuilder:
+                      (BuildContext context) => <PopupMenuEntry<ThemeMode>>[
+                        PopupMenuItem<ThemeMode>(
+                          value: ThemeMode.light,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.wb_sunny_outlined,
+                                color: context.theme.colorScheme.primary,
+                              ),
+                              const SizedBox(width: 8),
+                              const Text('Claro'),
+                            ],
+                          ),
+                        ),
+                        PopupMenuItem<ThemeMode>(
+                          value: ThemeMode.dark,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.nightlight_outlined,
+                                color: context.theme.colorScheme.primary,
+                              ),
+                              const SizedBox(width: 8),
+                              const Text('Escuro'),
+                            ],
+                          ),
+                        ),
+                        PopupMenuItem<ThemeMode>(
+                          value: ThemeMode.system,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.settings_suggest_outlined,
+                                color: context.theme.colorScheme.primary,
+                              ),
+                              const SizedBox(width: 8),
+                              const Text('Padrão do Sistema'),
+                            ],
+                          ),
+                        ),
+                      ],
                 ),
               ),
             ),
@@ -96,13 +126,12 @@ class SettingsView extends GetView<SettingsController> {
                 title: 'Sobre o Interlal',
                 trailing: const Icon(Icons.chevron_right, size: 20),
                 onTap: () {
-                  // TODO: Mostrar um AboutDialog ou navegar para tela de sobre
                   Get.dialog(
                     AlertDialog(
                       title: const Text('Sobre o Interlal'),
                       content: const Text(
                         'Aplicativo para acompanhamento dos jogos interclasse.\nVersão 1.0.0',
-                      ), // Exemplo
+                      ),
                       actions: [
                         TextButton(
                           onPressed: Get.back,
@@ -112,23 +141,14 @@ class SettingsView extends GetView<SettingsController> {
                     ),
                   );
                 },
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 4,
-                ),
               ),
               ActionCardTile(
                 icon: Icons.help_outline,
                 title: 'Ajuda e Suporte',
                 trailing: const Icon(Icons.chevron_right, size: 20),
                 onTap: () {
-                  // TODO: Navegar para tela de ajuda ou abrir link
                   Get.snackbar('Ação', 'Abrir central de ajuda');
                 },
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 4,
-                ),
               ),
             ],
           ),
@@ -137,24 +157,25 @@ class SettingsView extends GetView<SettingsController> {
     );
   }
 
-  Widget _buildThemeRadioTile(
-    BuildContext context,
-    ThemeMode value,
-    String title,
-    IconData icon,
-  ) {
-    return RadioListTile<ThemeMode>(
-      title: Text(title),
-      secondary: Icon(icon, color: context.theme.colorScheme.primary),
-      value: value,
-      groupValue: _themeController.themeMode,
-      onChanged: (ThemeMode? newValue) {
-        if (newValue != null) {
-          _themeController.setThemeMode(newValue);
-        }
-      },
-      activeColor: context.theme.colorScheme.primary,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-    );
+  IconData _getThemeIcon(ThemeMode themeMode) {
+    switch (themeMode) {
+      case ThemeMode.light:
+        return Icons.wb_sunny_outlined;
+      case ThemeMode.dark:
+        return Icons.nightlight_outlined;
+      case ThemeMode.system:
+        return Icons.settings_suggest_outlined;
+    }
+  }
+
+  String _getThemeName(ThemeMode themeMode) {
+    switch (themeMode) {
+      case ThemeMode.light:
+        return 'Claro';
+      case ThemeMode.dark:
+        return 'Escuro';
+      case ThemeMode.system:
+        return 'Padrão do Sistema';
+    }
   }
 }
