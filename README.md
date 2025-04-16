@@ -4,7 +4,7 @@
 
 <h1 align="center">Interlal</h1>
 
-O Interlal é um aplicativo Flutter desenvolvido para gerenciar e acompanhar os jogos interclasse da escola ETE Luiz Alves Lacerda. Com ele, usuários podem:
+O Interlal é um aplicativo Flutter desenvolvido para acompanhar os jogos interclasse da escola ETE Luiz Alves Lacerda. Com ele, usuários podem:
 
 *   Visualizar os próximos jogos e resultados recentes.
 *   Monitorar um placar em tempo real.
