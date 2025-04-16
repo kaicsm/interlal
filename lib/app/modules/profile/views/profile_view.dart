@@ -4,7 +4,6 @@ import 'package:interlal/app/modules/profile/controllers/profile_controller.dart
 import 'package:interlal/app/routes/app_routes.dart';
 import 'package:interlal/app/widgets/action_card_tile.dart';
 import 'package:interlal/app/widgets/section_title.dart';
-import 'package:logger/logger.dart';
 
 class ProfileView extends GetView<ProfileController> {
   const ProfileView({super.key});
@@ -117,9 +116,8 @@ class ProfileView extends GetView<ProfileController> {
               ),
             ),
             onPressed: () {
+              controller.signOut();
               Get.back();
-              // TODO: Implementar a lógica real de logout aqui
-              Logger().i("Logout confirmado!");
             },
           ),
         ],

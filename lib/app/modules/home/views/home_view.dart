@@ -163,7 +163,7 @@ class HomeView extends GetView<HomeController> {
     ];
 
     return SizedBox(
-      height: 135,
+      height: 145,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: games.length,
@@ -191,7 +191,6 @@ class HomeView extends GetView<HomeController> {
   }) {
     final theme = context.theme;
     final colorScheme = theme.colorScheme;
-    IconData sportIcon = IconHelper.getSportIcon(sport);
 
     return Card(
       elevation: 2,
@@ -209,7 +208,18 @@ class HomeView extends GetView<HomeController> {
             children: [
               Row(
                 children: [
-                  Icon(sportIcon, size: 18, color: colorScheme.primary),
+                  Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: colorScheme.primary.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Icon(
+                      IconHelper.getSportIcon(sport),
+                      size: 16,
+                      color: colorScheme.primary,
+                    ),
+                  ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
@@ -388,50 +398,6 @@ class HomeView extends GetView<HomeController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      color: colorScheme.primary.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Icon(
-                      Icons.newspaper,
-                      size: 20,
-                      color: colorScheme.primary,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      'Notícia',
-                      style: theme.textTheme.labelMedium?.copyWith(
-                        color: colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: colorScheme.primaryContainer,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Text(
-                      'Importante',
-                      style: theme.textTheme.labelSmall?.copyWith(
-                        color: colorScheme.onPrimaryContainer,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
               Text(
                 'Goleada do artilheiro do 2º TDS A',
                 style: theme.textTheme.titleMedium?.copyWith(

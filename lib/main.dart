@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/instance_manager.dart';
 import 'package:interlal/app.dart';
 import 'package:interlal/app/core/controllers/theme_controller.dart';
+import 'package:interlal/app/core/services/auth_service.dart';
 import 'package:interlal/app/core/services/database_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -25,6 +26,7 @@ void main() async {
 
 Future<void> initializeServices() async {
   await Get.putAsync<DatabaseService>(() => DatabaseService.init());
+  Get.lazyPut<AuthService>(() => AuthService(), fenix: true);
   Get.lazyPut<ThemeController>(() => ThemeController(), fenix: true);
 }
 
