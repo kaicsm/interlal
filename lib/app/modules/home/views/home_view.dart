@@ -83,57 +83,42 @@ class HomeView extends GetView<HomeController> {
     final theme = context.theme;
     final colorScheme = theme.colorScheme;
     return Card(
-      elevation: 4,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          image: DecorationImage(
-            image: AssetImage('assets/images/futsal_banner.png'),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-              Colors.black.withValues(alpha: 0.7),
-              BlendMode.darken,
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'HOJE ÀS 15:00 - QUADRA',
+              style: theme.textTheme.labelMedium?.copyWith(
+                color: colorScheme.onPrimaryContainer.withValues(alpha: 0.8),
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'HOJE ÀS 15:00 - QUADRA',
-                style: theme.textTheme.labelMedium?.copyWith(
-                  color: colorScheme.onPrimaryContainer.withValues(alpha: 0.8),
-                  fontWeight: FontWeight.bold,
-                ),
+            const SizedBox(height: 8.0),
+            Text(
+              'Final Futsal Masculino',
+              style: theme.textTheme.headlineSmall?.copyWith(
+                color: colorScheme.onPrimaryContainer,
+                fontWeight: FontWeight.bold,
               ),
-              const SizedBox(height: 8.0),
-              Text(
-                'Final Futsal Masculino',
-                style: theme.textTheme.headlineSmall?.copyWith(
-                  color: colorScheme.onPrimaryContainer,
-                  fontWeight: FontWeight.bold,
-                ),
+            ),
+            const SizedBox(height: 4.0),
+            Text(
+              '3º TDS A vs 3º LOG A',
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: colorScheme.onPrimaryContainer.withValues(alpha: 0.9),
               ),
-              const SizedBox(height: 4.0),
-              Text(
-                '3º TDS A vs 3º LOG A',
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  color: colorScheme.onPrimaryContainer.withValues(alpha: 0.9),
-                ),
-              ),
-              const SizedBox(height: 16.0),
-              ElevatedButton.icon(
-                onPressed: () {
-                  Get.snackbar('Ação', 'Ver detalhes do jogo');
-                },
-                icon: const Icon(Icons.info_outline, size: 18),
-                label: const Text('Mais Detalhes'),
-              ),
-            ],
-          ),
-          // ),
+            ),
+            const SizedBox(height: 16.0),
+            ElevatedButton.icon(
+              onPressed: () {
+                Get.snackbar('Ação', 'Ver detalhes do jogo');
+              },
+              icon: const Icon(Icons.info_outline, size: 18),
+              label: const Text('Mais Detalhes'),
+            ),
+          ],
         ),
       ),
     );
