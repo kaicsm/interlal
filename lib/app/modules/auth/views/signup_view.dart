@@ -24,10 +24,13 @@ class SignupView extends GetView<AuthController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Icon(
-                    Icons.person_add_alt_1_outlined,
-                    size: 60,
-                    color: theme.colorScheme.primary,
+                  Hero(
+                    tag: 'logo',
+                    child: Icon(
+                      Icons.person_add_alt_1,
+                      size: 60,
+                      color: theme.colorScheme.primary,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(

@@ -25,10 +25,13 @@ class SigninView extends GetView<AuthController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Icon(
-                    Icons.sports_soccer,
-                    size: 60,
-                    color: theme.colorScheme.primary,
+                  Hero(
+                    tag: 'logo',
+                    child: Icon(
+                      Icons.sports_soccer,
+                      size: 60,
+                      color: theme.colorScheme.primary,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(
