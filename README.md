@@ -1,8 +1,8 @@
-# Interlal
-
 <p align="center">
   <img src="assets/images/logo.png" alt="Interlal Logo" width="150"/>
 </p>
+
+<h1 align="center">Interlal</h1>
 
 O Interlal é um aplicativo Flutter desenvolvido para gerenciar e acompanhar os jogos interclasse da escola ETE Luiz Alves Lacerda. Com ele, usuários podem:
 
