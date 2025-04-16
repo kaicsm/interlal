@@ -39,6 +39,22 @@ class SignupView extends GetView<AuthController> {
                   ),
                   const SizedBox(height: 32.0),
                   TextFormField(
+                    controller: controller.nameController,
+                    validator: controller.validateName,
+                    keyboardType: TextInputType.name,
+                    textInputAction: TextInputAction.next,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: InputDecoration(
+                      labelText: 'Nome',
+                      hintText: 'Seu nome',
+                      prefixIcon: Icon(
+                        Icons.person,
+                        color: theme.colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  TextFormField(
                     controller: controller.emailController,
                     validator: controller.validateEmail,
                     keyboardType: TextInputType.emailAddress,

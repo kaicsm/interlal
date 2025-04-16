@@ -10,6 +10,10 @@ class ProfileController extends GetxController {
     super.onInit();
   }
 
+  String getUserName() {
+    return _authService.currentUser?.userMetadata?['name'] ?? 'Aluno';
+  }
+
   Future<void> signOut() async {
     await _authService.signOut();
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:interlal/app/core/services/auth_service.dart';
+import 'package:interlal/app/routes/app_routes.dart';
 import 'package:logger/logger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -8,6 +9,7 @@ class AuthController extends GetxController {
   final Logger _log = Logger();
   late AuthService authService;
 
+  late TextEditingController nameController;
   late TextEditingController emailController;
   late TextEditingController passwordController;
   late TextEditingController confirmPasswordController;
@@ -26,10 +28,22 @@ class AuthController extends GetxController {
   void onInit() {
     super.onInit();
     authService = Get.find<AuthService>();
+    nameController = TextEditingController();
     emailController = TextEditingController();
     passwordController = TextEditingController();
     confirmPasswordController = TextEditingController();
     resetEmailController = TextEditingController();
+  }
+
+  String? validateName(String? value) {
+    final name = value?.trim() ?? '';
+    if (name.isEmpty) {
+      return 'O nome é obrigatório';
+    }
+    if (name.length < 2) {
+      return 'O nome deve ter pelo menos 2 caracteres';
+    }
+    return null;
   }
 
   String? validateEmail(String? value) {
@@ -93,10 +107,17 @@ class AuthController extends GetxController {
     if (!isValid) return;
 
     isLoading.value = true;
+
+    final String name = nameController.text.trim();
+    final String email = emailController.text.trim();
+    final String password = passwordController.text;
+    final Map<String, dynamic> userData = {'name': name};
+
     try {
       await authService.signUpWithEmailPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text,
+        email: email,
+        password: password,
+        data: userData,
       );
       _log.i('User signed up successfully: ${emailController.text.trim()}');
       Get.snackbar(
@@ -106,7 +127,7 @@ class AuthController extends GetxController {
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
-      Get.offAllNamed('/signin');
+      Get.offAllNamed(AppRoutes.signin);
       _clearFormFields();
     } on AuthException catch (e) {
       _handleAuthError(e, 'Falha no cadastro');
