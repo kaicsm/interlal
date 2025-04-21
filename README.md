@@ -10,24 +10,6 @@ O Interlal é um aplicativo Flutter desenvolvido para acompanhar os jogos interc
 *   Monitorar um placar em tempo real.
 *   Acompanhar o ranking de times e jogadores.
 
-## Estrutura do Projeto
-*   `lib/app`: Código principal do aplicativo.
-    *   `core`: Serviços e controllers base.
-    *   `data`: Models utilizados no aplicativo.
-    *   `modules`: Módulos do aplicativo (auth, home, profile, ranking, settings, shell).
-    *   `routes`: Configuração das rotas do aplicativo.
-    *   `utils`: Utilitários e temas.
-    *   `widgets`: Componentes reutilizáveis.
-
-## Tecnologias Utilizadas
-
-*   **Flutter:** Framework para desenvolvimento mobile.
-*   **GetX:** Gerenciamento de estado, rotas e dependências.
-*   **Supabase:** Backend como serviço para autenticação e banco de dados.
-*   **Isar:** Banco de dados local para armazenar configurações do aplicativo.
-*   **Logger:** Biblioteca para logs.
-*   **Flutter Dotenv:** Para carregar variáveis de ambiente.
-
 ## Configuração
 
 1.  **Instale as dependências:**
