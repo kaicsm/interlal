@@ -51,7 +51,7 @@ class AppTheme {
         ),
       ),
 
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: brightness == Brightness.light ? 1.0 : 1.5,
         color: colorScheme.surfaceContainerLow,
         clipBehavior: Clip.antiAlias,
@@ -141,7 +141,7 @@ class AppTheme {
         ),
       ),
 
-      dialogTheme: DialogTheme(
+      dialogTheme: DialogThemeData(
         backgroundColor: colorScheme.surfaceContainerHigh,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
